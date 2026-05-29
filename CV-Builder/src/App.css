@@ -1,0 +1,22 @@
+.appContainer{
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.sideBar{
+    border: 1px solid green;
+}
+
+.cvresume{
+    border: 2px solid yellow;
+}
+
+.personalContainer{
+    border: 1px solid orange;
+    padding: 0 0.6rem;
+}
+
+.personalContainer h1{
+    margin-bottom: 0.2rem;
+}

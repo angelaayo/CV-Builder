@@ -8,7 +8,15 @@ import Preview from "./components/Preview.jsx";
 //import Experience from "./components/Experience.jsx";
 
 function App() {
-  const [personal, setPersonal] = useState({});
+  const [personal, setPersonal] = useState({
+    fullName: "John Doe",
+    phone: "1234567890",
+    email: "johndoe@gmail.com",
+    address: "New York Avenue",
+  });
+
+  //const [summary, setSummary] = useState("");
+
   const [isAdding, setIsAdding] = useState(false);
   const detailsRefs = useRef({});
 
@@ -47,7 +55,7 @@ function App() {
 
   const [draft, setDraft] = useState({});
 
-  const formData = { personal, experience, education, skills, draft };
+  const formData = { personal, experience, education, skills, draft};
 
   const setterMap = {
     experience: setExperience,
@@ -92,60 +100,60 @@ function App() {
   }
 
   return (
-    <>
-      {sections.map((section) => (
-        <DropdownSection
-          key={section.key}
-          title={section.title}
-          ref={(el) => (detailsRefs.current[section.key] = el)}
-          onToggle = {(e) =>{
-            if(e.target.open){
-              setIsAdding(false)
-              Object.entries(detailsRefs.current).forEach(([key, el]) =>{
-                if(key != section.key) el.open = false;
-              })
-            }
-          }}
-        >
-          {!isAdding &&
-            section.type == "multi" &&
-            dataMap[section.key].map((input, index) => (
-              <Preview key={index} name={input[section.previewField]} />
-            ))}
-          {!isAdding && (
-            <button onClick={() => handleAddNew(section)}>
-              Edit
-            </button>
-          )}
-          <form>
-            {isAdding && (
-              <>
-                {section.fields.map((field) => (
-                  <InputForm
-                    key={field.name}
-                    title={field.name}
-                    placeholder={field.placeholder}
-                    type={field.type}
-                    inputValue={
-                      section.type == "single"
-                        ? personal[field.name] || ""
-                        : draft[field.name] || ""
-                    }
-                    onChange={(e) =>
-                      handleStateChange(section, field.name, e.target.value)
-                    }
-                  />
-                ))}
-                <button type="button" onClick={() => handleSave(section)}>
-                  Save
-                </button>
-              </>
+    <div className="appContainer">
+      <div className="sideBar">
+        {sections.map((section) => (
+          <DropdownSection
+            key={section.key}
+            title={section.title}
+            ref={(el) => (detailsRefs.current[section.key] = el)}
+            onToggle={(e) => {
+              if (e.target.open) {
+                setIsAdding(false);
+                Object.entries(detailsRefs.current).forEach(([key, el]) => {
+                  if (key != section.key) el.open = false;
+                });
+              }
+            }}
+          >
+            {!isAdding &&
+              section.type == "multi" &&
+              dataMap[section.key].map((input, index) => (
+                <Preview key={index} name={input[section.previewField]} />
+              ))}
+            {!isAdding && (
+              <button onClick={() => handleAddNew(section)}>Edit</button>
             )}
-          </form>
-        </DropdownSection>
-      ))}
+            {isAdding && (
+              <form>
+                <>
+                  {section.fields.map((field) => (
+                    <InputForm
+                      key={field.name}
+                      title={field.name}
+                      placeholder={field.placeholder}
+                      type={field.type}
+                      inputValue={
+                        section.type == "single"
+                          ? personal[field.name] || ""
+                          : draft[field.name] || ""
+                      }
+                      onChange={(e) =>
+                        handleStateChange(section, field.name, e.target.value)
+                      }
+                    />
+                  ))}
+                  <button type="button" onClick={() => handleSave(section)}>
+                    Save
+                  </button>
+                </>
+              </form>
+            )}
+          </DropdownSection>
+        ))}
+      </div>
       <CVResume formData={formData} draftInput={draft}></CVResume>
-    </>
+    </div>
   );
 }
 export default App;
