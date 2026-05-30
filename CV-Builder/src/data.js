@@ -4,10 +4,10 @@ const sections = [
     key: "personal",
     type: "single",
     fields: [
-      { name: "fullName", placeholder: "John Doe", type: "text" },
-      { name: "email", placeholder: "123@gmail.com", type: "email" },
-      { name: "phone", placeholder: "1234567890", type: "text" },
-      { name: "address", placeholder: "New York Ave", type: "text" },
+      { id: "fullName", placeholder: "John Doe", type: "text", label: "Full Name" },
+      { id: "email", placeholder: "123@gmail.com", type: "email", label: "Email" },
+      { id: "phone", placeholder: "1234567890", type: "text", label: "Phone" },
+      { id: "address", placeholder: "New York Ave", type: "text", label: "Address" },
     ],
   },
 
@@ -28,11 +28,11 @@ const sections = [
     type: "multi",
     previewField: "position",
     fields: [
-      { name: "position", placeholder: "John Doe", type: "text" },
-      { name: "company", placeholder: "123@gmail.com", type: "email" },
-      { name: "city", placeholder: "1234567890", type: "text" },
-      { name: "state", placeholder: "New York Ave", type: "text" },
-      { name: "date", placeholder: "", type: "" },
+      { id: "position", placeholder: "Junior Intern", type: "text", label: "Position" },
+      { id: "company", placeholder: "Company XYZ", type: "text", label: "Company"  },
+      { id: "city", placeholder: "Dallas", type: "text", label: "City" },
+      { id: "state", placeholder: "Texas", type: "text", label: "State"  },
+      { id: "date", placeholder: "", type: "date", label: "Date"  },
     ],
   },
 ];

@@ -1,22 +1,46 @@
-.appContainer{
-    border: 1px solid red;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
+.appContainer {
+  border: 1px solid red;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 }
 
-.sideBar{
-    border: 1px solid green;
+.sideBar {
+  border: 1px solid green;
+  padding: 0.6rem;
 }
 
-.cvresume{
-    border: 2px solid yellow;
+.cvresume {
+  border: 2px solid yellow;
 }
 
-.personalContainer{
-    border: 1px solid orange;
-    padding: 0 0.6rem;
+.personalContainer {
+  border: 1px solid orange;
+  padding: 0 0.6rem;
 }
 
-.personalContainer h1{
-    margin-bottom: 0.2rem;
+.personalContainer h1 {
+  margin-bottom: 0.2rem;
+}
+
+.inputForm {
+  /* border: 1px solid red; */
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0.4rem;
+  /* border: 1px solid purple; */
+}
+
+input {
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  padding: 0.5rem 1rem;
+}
+
+form {
+  /* border: 1px solid yellow; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }

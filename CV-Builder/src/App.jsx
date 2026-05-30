@@ -55,7 +55,7 @@ function App() {
 
   const [draft, setDraft] = useState({});
 
-  const formData = { personal, experience, education, skills, draft};
+  const formData = { personal, experience, education, skills, draft };
 
   const setterMap = {
     experience: setExperience,
@@ -99,6 +99,23 @@ function App() {
     }
   }
 
+  function cancelEntry() {
+    Object.keys(setterMap).forEach((key) => {
+      setterMap[key]((prev) => prev.filter((item) => !item.isEditing));
+    });
+    setDraft({});
+  }
+
+  function dropdownToggle(e, section) {
+    cancelEntry();
+    if (e.target.open) {
+      setIsAdding(false);
+      Object.entries(detailsRefs.current).forEach(([key, el]) => {
+        if (key != section.key) el.open = false;
+      });
+    }
+  }
+
   return (
     <div className="appContainer">
       <div className="sideBar">
@@ -107,14 +124,7 @@ function App() {
             key={section.key}
             title={section.title}
             ref={(el) => (detailsRefs.current[section.key] = el)}
-            onToggle={(e) => {
-              if (e.target.open) {
-                setIsAdding(false);
-                Object.entries(detailsRefs.current).forEach(([key, el]) => {
-                  if (key != section.key) el.open = false;
-                });
-              }
-            }}
+            onToggle={(e) => dropdownToggle(e, section)}
           >
             {!isAdding &&
               section.type == "multi" &&
@@ -129,23 +139,35 @@ function App() {
                 <>
                   {section.fields.map((field) => (
                     <InputForm
-                      key={field.name}
-                      title={field.name}
+                      key={field.id}
+                      title={field.label}
                       placeholder={field.placeholder}
                       type={field.type}
                       inputValue={
                         section.type == "single"
-                          ? personal[field.name] || ""
-                          : draft[field.name] || ""
+                          ? personal[field.id] || ""
+                          : draft[field.id] || ""
                       }
                       onChange={(e) =>
-                        handleStateChange(section, field.name, e.target.value)
+                        handleStateChange(section, field.id, e.target.value)
                       }
                     />
                   ))}
-                  <button type="button" onClick={() => handleSave(section)}>
-                    Save
-                  </button>
+                  <div>
+                    <button type="submit" onClick={() => handleSave(section)}>
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        cancelEntry();
+                        detailsRefs.current[section.key].open = false;
+                        setIsAdding(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </>
               </form>
             )}
